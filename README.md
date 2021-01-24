@@ -5,6 +5,11 @@ Clone repo
 git clone
 ```
 
+Create .env file
+```cli
+cp .env.example .env
+```
+
 Install dependencies
 ```cli
 composer install
@@ -22,5 +27,7 @@ Install npm dependencies and build
 
 Run migrations
 ```cli
-./vendor/bin/sail atrisan migrate
+./vendor/bin/sail artisan migrate
 ```
+
+After migration open <a href="http://localhost">http://localhost</a> or <a href="http://127.0.0.1">http://127.0.0.1</a> to view th project
