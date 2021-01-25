@@ -43,3 +43,9 @@ You could specify max uploaded file size and allowed image mimes in `.env` file
 MAX_FILE_SIZE=2048 #in kilobytes
 ALLOWED_MIMES="jpg,jpeg,png" #Comma separated list of allowed mime types
 ```
+
+## Running tests
+Run PHP tests
+```cli
+./vendor/bin/sail artisan test
+```

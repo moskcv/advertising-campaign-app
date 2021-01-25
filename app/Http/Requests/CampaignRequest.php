@@ -25,7 +25,7 @@ class CampaignRequest extends FormRequest
      */
     public function rules(): array
     {
-        $mimes = Config::get('app.allowed_mimes');
+        $mimes = Config::get('app.allowed_mime_types');
         $maxFileSize = Config::get('app.max_file_size');
 
         return [

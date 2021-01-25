@@ -230,6 +230,6 @@ return [
     ],
 
     'max_file_size' => env('MAX_FILE_SIZE', 2048),
-    'allowed_mimes' => env('ALLOWED_MIMES', 'jpg, jpeg, png')
+    'allowed_mime_types' => env('ALLOWED_MIMES', 'jpg, jpeg, png')
 
 ];

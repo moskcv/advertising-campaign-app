@@ -13,6 +13,7 @@ const Home = () => {
     const [campaigns, setCampaigns] = useState([]);
     const [modal, setShowModal] = useState(false);
     const [alert, setAlert] = useState(null);
+    const [creatives, setCreatives] = useState([]);
 
     useEffect(() => {
         CampaignService.getAll()
@@ -53,11 +54,11 @@ const Home = () => {
             });
     };
 
-    const handlePreview = id => {
+    const handlePreview = creatives => {
         setLoader(true);
-        const campaign = campaigns.find(campaign => {
-            return campaign.id === id;
-        });
+        setCreatives(creatives);
+        setShowModal(true);
+        setLoader(false);
     };
 
     return (
@@ -86,6 +87,13 @@ const Home = () => {
                 onClick={() => setShowModal(false)}
                 isVisible={modal}
             >
+                {
+                    creatives.length > 0 ?
+                        creatives.map(creative => {
+                            return <img key={creative.id} src={`/uploads/${creative.name}`} alt={creative.name} />
+                        })
+                        : <h2 className='text-center'>Nothing found</h2>
+                }
             </Modal>
         </div>
     );

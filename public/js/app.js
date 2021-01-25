@@ -2096,7 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var Footer = function Footer(props) {
+var Footer = function Footer() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", {
     className: "footer",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
@@ -2123,10 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
 
@@ -2145,7 +2142,7 @@ var Header = function Header(props) {
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "tools-right",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
           to: props.buttonLink,
           className: "btn btn-primary",
           children: props.buttonText
@@ -2155,11 +2152,6 @@ var Header = function Header(props) {
   });
 };
 
-Header.propTypes = {
-  title: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string.isRequired),
-  buttonLink: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string.isRequired),
-  buttonText: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string.isRequired)
-};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
 
 /***/ }),
@@ -2190,18 +2182,19 @@ var ActionsBlock = function ActionsBlock(props) {
       type: "button",
       className: "btn btn-danger",
       onClick: function onClick() {
-        return props.onDelete(props.id);
+        return props.onDelete(props.row.id);
       },
       children: "Delete"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+      disabled: props.row.creatives.length === 0,
       type: "button",
       className: "btn btn-secondary",
       onClick: function onClick() {
-        return props.onPreview(props.id);
+        return props.onPreview(props.row.creatives);
       },
       children: "Preview creatives"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-      to: "/campaigns/edit/".concat(props.id),
+      to: "/campaigns/edit/".concat(props.row.id),
       className: "btn btn-info",
       children: "Edit"
     })]
@@ -2295,7 +2288,7 @@ var DataTable = function DataTable(props) {
           var key = _ref2.key;
           if (key === 'actions') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ActionsBlock_ActionsBlock__WEBPACK_IMPORTED_MODULE_3__.default, {
-              id: row.id,
+              row: row,
               onDelete: props.onDelete,
               onPreview: props.onPreview
             })
@@ -2701,7 +2694,7 @@ var Campaign = function Campaign() {
 
     setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_9__.buildCampaignFormData)());
     setLoader(false);
-  }, [id, isUpdating]);
+  }, [id, isUpdating, setFormData, setFormValid, setLoader]);
 
   var handleChange = function handleChange(event, controlName) {
     var formDataClone = _objectSpread({}, formData);
@@ -2746,7 +2739,7 @@ var Campaign = function Campaign() {
 
     if (rules.date) {
       if (!moment__WEBPACK_IMPORTED_MODULE_2___default()(value, 'YYYY-MM-DD', true).isValid()) {
-        throw 'Please, provid proper date format: yyyy-mm-dd';
+        throw 'Please, provide proper date format: yyyy-mm-dd';
       }
     }
 
@@ -2961,7 +2954,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Home = function Home(props) {
+var Home = function Home() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       isLoading = _useState2[0],
@@ -2981,6 +2974,11 @@ var Home = function Home(props) {
       _useState8 = _slicedToArray(_useState7, 2),
       alert = _useState8[0],
       setAlert = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      creatives = _useState10[0],
+      setCreatives = _useState10[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     _services_CampaignService__WEBPACK_IMPORTED_MODULE_2__.default.getAll().then(function (res) {
@@ -3016,11 +3014,11 @@ var Home = function Home(props) {
     });
   };
 
-  var handlePreview = function handlePreview(id) {
+  var handlePreview = function handlePreview(creatives) {
     setLoader(true);
-    var campaign = campaigns.find(function (campaign) {
-      return campaign.id === id;
-    });
+    setCreatives(creatives);
+    setShowModal(true);
+    setLoader(false);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -3051,7 +3049,16 @@ var Home = function Home(props) {
       onClick: function onClick() {
         return setShowModal(false);
       },
-      isVisible: modal
+      isVisible: modal,
+      children: creatives.length > 0 ? creatives.map(function (creative) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
+          src: "/uploads/".concat(creative.name),
+          alt: creative.name
+        }, creative.id);
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
+        className: "text-center",
+        children: "Nothing found"
+      })
     })]
   });
 };

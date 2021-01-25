@@ -39,7 +39,7 @@ const Campaign = () => {
 
         setFormData(buildCampaignFormData());
         setLoader(false);
-    }, [id]);
+    }, [id, isUpdating, setFormData, setFormValid, setLoader]);
 
     const handleChange = (event, controlName) => {
         const formDataClone = {...formData};
@@ -84,7 +84,7 @@ const Campaign = () => {
 
         if (rules.date) {
             if (!moment(value, 'YYYY-MM-DD', true).isValid()) {
-                throw 'Please, provid proper date format: yyyy-mm-dd';
+                throw 'Please, provide proper date format: yyyy-mm-dd';
             }
 
         }

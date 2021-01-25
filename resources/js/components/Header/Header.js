@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import propTypes from 'prop-types';
 
 const Header = props => (
     <div className="header">
@@ -14,11 +13,5 @@ const Header = props => (
         </div>
     </div>
 );
-
-Header.propTypes = {
-    title: propTypes.string.isRequired,
-    buttonLink: propTypes.string.isRequired,
-    buttonText:propTypes.string.isRequired
-};
 
 export default Header;

@@ -23,7 +23,7 @@ const DataTable = props => {
                             return (
                                 <td key={`${index}-${i}`}>
                                     <ActionsBlock
-                                        id={row.id}
+                                        row={row}
                                         onDelete={props.onDelete}
                                         onPreview={props.onPreview}
                                     />
