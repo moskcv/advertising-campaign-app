@@ -11,7 +11,7 @@ import Alert from "../../components/ui/Alert/Alert";
 
 import { buildCampaignFormData } from "../../utils/campaigns";
 
-const Campaign = props => {
+const Campaign = () => {
     let history = useHistory();
 
     const { id } = useParams();
@@ -102,26 +102,27 @@ const Campaign = props => {
         control.touched = true;
 
         if (files.length) {
-            const validFormates = [
-                'image/png',
-                'image/jpeg',
-                'image/jpg',
-                'image/bmp',
-            ];
             for (let i = 0; i < files.length; i++) {
-                if (validFormates.includes(files[i].type)) {
+                try {
+                    validateFile(files[i]);
                     control.valid = true;
                     control.value = event.target.value;
                     control.files.push(files[i]);
-                } else {
+                } catch (e) {
                     control.valid = false;
-                    control.errorMessage = 'Please, provide only images';
+                    control.errorMessage = e;
                     control.value = '';
                 }
             }
         }
 
         return control;
+    };
+
+    const validateFile = file => {
+        if (file.type.split('/')[0] !== 'image') {
+            throw `Please, provide an image.`;
+        }
     };
 
     const handleFormSubmit = event => {

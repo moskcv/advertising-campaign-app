@@ -30,4 +30,17 @@ Run migrations
 ./vendor/bin/sail artisan migrate
 ```
 
-After migration open <a href="http://localhost">http://localhost</a> or <a href="http://127.0.0.1">http://127.0.0.1</a> to view th project
+Install app key
+```cli
+./vendor/bin/sail artisan key:generate
+```
+
+After migration open <a href="http://localhost">http://localhost</a> or <a href="http://127.0.0.1">http://127.0.0.1</a> to view the project
+
+
+## Configuration
+You could specify max uploaded file size and allowed image mimes in `.env` file
+```.dotenv
+MAX_FILE_SIZE=2048 #in kilobytes
+ALLOWED_MIMES="jpg,jpeg,png" #Comma separated list of allowed mime types
+```
