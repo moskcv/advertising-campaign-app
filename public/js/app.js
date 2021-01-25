@@ -1985,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var App = function App(props) {
+var App = function App() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "main-content",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, {
@@ -2617,17 +2617,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_Header_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Header/Header */ "./resources/js/components/Header/Header.js");
 /* harmony import */ var _services_CampaignService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/CampaignService */ "./resources/js/services/CampaignService.js");
 /* harmony import */ var _services_CreativeService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/CreativeService */ "./resources/js/services/CreativeService.js");
-/* harmony import */ var _utils_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/config */ "./resources/js/utils/config.js");
-/* harmony import */ var _components_CampaignForm_CampaignForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/CampaignForm/CampaignForm */ "./resources/js/components/CampaignForm/CampaignForm.js");
-/* harmony import */ var _components_ui_Loader_Loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/ui/Loader/Loader */ "./resources/js/components/ui/Loader/Loader.js");
-/* harmony import */ var _components_ui_Alert_Alert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/ui/Alert/Alert */ "./resources/js/components/ui/Alert/Alert.js");
-/* harmony import */ var _utils_campaigns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/campaigns */ "./resources/js/utils/campaigns.js");
+/* harmony import */ var _components_CampaignForm_CampaignForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/CampaignForm/CampaignForm */ "./resources/js/components/CampaignForm/CampaignForm.js");
+/* harmony import */ var _components_ui_Loader_Loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/ui/Loader/Loader */ "./resources/js/components/ui/Loader/Loader.js");
+/* harmony import */ var _components_ui_Alert_Alert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/ui/Alert/Alert */ "./resources/js/components/ui/Alert/Alert.js");
+/* harmony import */ var _utils_campaigns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/campaigns */ "./resources/js/utils/campaigns.js");
 
 
 
@@ -2660,18 +2659,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+var Campaign = function Campaign() {
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useHistory)();
 
-var getValidImageFormats = function getValidImageFormats() {
-  var allowedMimes = _utils_config__WEBPACK_IMPORTED_MODULE_6__.default.getAllowedMimes();
-  return allowedMimes.split(",").map(function (mime) {
-    return "image/".concat(mime);
-  });
-};
-
-var Campaign = function Campaign(props) {
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_11__.useHistory)();
-
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_11__.useParams)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useParams)(),
       id = _useParams.id;
 
   var isUpdating = !!id;
@@ -2698,9 +2689,8 @@ var Campaign = function Campaign(props) {
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (isUpdating) {
-      console.log('test');
       _services_CampaignService__WEBPACK_IMPORTED_MODULE_4__.default.get(id).then(function (res) {
-        setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_10__.buildCampaignFormData)(res.data.data));
+        setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_9__.buildCampaignFormData)(res.data.data));
         setFormValid(true);
         setLoader(false);
       })["catch"](function (err) {
@@ -2709,9 +2699,9 @@ var Campaign = function Campaign(props) {
       return;
     }
 
-    setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_10__.buildCampaignFormData)());
+    setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_9__.buildCampaignFormData)());
     setLoader(false);
-  }, []);
+  }, [id, isUpdating]);
 
   var handleChange = function handleChange(event, controlName) {
     var formDataClone = _objectSpread({}, formData);
@@ -2790,16 +2780,8 @@ var Campaign = function Campaign(props) {
   };
 
   var validateFile = function validateFile(file) {
-    var validFormats = getValidImageFormats();
-
-    if (!validFormats.includes(file.type)) {
-      throw "Please, provide valid formats. Allowed formats: ".concat(_utils_config__WEBPACK_IMPORTED_MODULE_6__.default.getAllowedMimes());
-    }
-
-    var maxFileSize = +_utils_config__WEBPACK_IMPORTED_MODULE_6__.default.getMaxFileSize();
-
-    if (file.size > maxFileSize) {
-      throw "File size is too big. Max file size: ".concat(maxFileSize);
+    if (file.type.split('/')[0] !== 'image') {
+      throw "Please, provide an image.";
     }
   };
 
@@ -2823,7 +2805,7 @@ var Campaign = function Campaign(props) {
           type: 'success',
           message: res.data.message
         });
-        setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_10__.buildCampaignFormData)(res.data.data));
+        setFormData((0,_utils_campaigns__WEBPACK_IMPORTED_MODULE_9__.buildCampaignFormData)(res.data.data));
         setFormValid(true);
         setLoader(false);
       })["catch"](function (err) {
@@ -2906,7 +2888,7 @@ var Campaign = function Campaign(props) {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_Loader_Loader__WEBPACK_IMPORTED_MODULE_8__.default, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_Loader_Loader__WEBPACK_IMPORTED_MODULE_7__.default, {
       isLoading: isLoading
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "row",
@@ -2916,12 +2898,12 @@ var Campaign = function Campaign(props) {
           title: isUpdating ? "Edit campaign ID: ".concat(id) : 'Create campaign',
           buttonText: "Back to all campaigns",
           buttonLink: "/"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_Alert_Alert__WEBPACK_IMPORTED_MODULE_9__.default, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_Alert_Alert__WEBPACK_IMPORTED_MODULE_8__.default, {
           alert: alert,
           onClose: function onClose() {
             return setAlert(null);
           }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_CampaignForm_CampaignForm__WEBPACK_IMPORTED_MODULE_7__.default, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_CampaignForm_CampaignForm__WEBPACK_IMPORTED_MODULE_6__.default, {
           formData: formData,
           onChange: handleChange,
           isFormValid: isFormValid,
@@ -3299,49 +3281,6 @@ var buildCampaignDataTable = function buildCampaignDataTable() {
     key: 'actions'
   }];
 };
-
-/***/ }),
-
-/***/ "./resources/js/utils/config.js":
-/*!**************************************!*\
-  !*** ./resources/js/utils/config.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Config = /*#__PURE__*/function () {
-  function Config() {
-    _classCallCheck(this, Config);
-  }
-
-  _createClass(Config, [{
-    key: "getMaxFileSize",
-    value: function getMaxFileSize() {
-      console.log(process.env);
-      return process.env.MAX_FILE_SIZE || 2048;
-    }
-  }, {
-    key: "getAllowedMimes",
-    value: function getAllowedMimes() {
-      return process.env.ALLOWED_MIMES || "jpg,jpeg,png";
-    }
-  }]);
-
-  return Config;
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new Config());
 
 /***/ }),
 

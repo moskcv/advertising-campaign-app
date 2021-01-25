@@ -9,21 +9,19 @@ import Home from '../pages/Home/Home';
 import Campaign from '../pages/Campaign/Campaign';
 import Footer from '../components/Footer/Footer';
 
-const App = props => {
-    return (
-        <div className="main-content">
-            <Router forceRefresh={true} >
-                <Switch>
-                    <Route path="/campaigns/create" component={Campaign} />
-                    <Route path="/campaigns/edit/:id" component={Campaign} />
-                    <Route exact path="/" component={Home} />
-                </Switch>
-            </Router>
+const App = () => (
+    <div className="main-content">
+        <Router forceRefresh={true} >
+            <Switch>
+                <Route path="/campaigns/create" component={Campaign} />
+                <Route path="/campaigns/edit/:id" component={Campaign} />
+                <Route exact path="/" component={Home} />
+            </Switch>
+        </Router>
 
-            <Footer />
-        </div>
-    );
-};
+        <Footer />
+    </div>
+);
 
 export default App;
 

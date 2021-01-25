@@ -8,7 +8,7 @@ import DataTable from '../../components/ui/DataTable/DataTable';
 import Modal from '../../components/ui/Modal/Modal';
 import Loader from '../../components/ui/Loader/Loader';
 
-const Home = props => {
+const Home = () => {
     const [isLoading, setLoader] = useState(true);
     const [campaigns, setCampaigns] = useState([]);
     const [modal, setShowModal] = useState(false);
@@ -92,4 +92,3 @@ const Home = props => {
 };
 
 export default Home;
-

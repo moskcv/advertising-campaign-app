@@ -12,7 +12,7 @@ import Alert from "../../components/ui/Alert/Alert";
 import { buildCampaignFormData } from "../../utils/campaigns";
 
 const Campaign = () => {
-    let history = useHistory();
+    const history = useHistory();
 
     const { id } = useParams();
     const isUpdating = !!id;
@@ -24,7 +24,6 @@ const Campaign = () => {
 
     useEffect(() => {
         if (isUpdating) {
-            console.log('test');
             CampaignService.get(id)
                 .then(res => {
                     setFormData(buildCampaignFormData(res.data.data));
@@ -40,7 +39,7 @@ const Campaign = () => {
 
         setFormData(buildCampaignFormData());
         setLoader(false);
-    }, []);
+    }, [id]);
 
     const handleChange = (event, controlName) => {
         const formDataClone = {...formData};
